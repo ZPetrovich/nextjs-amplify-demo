@@ -1,9 +1,28 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+const fetch = require('node-fetch');
 
 export default function Home() {
-  return (
+  const onClickHandler = async () => {
+    console.log("saveHandler...");
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then(json => {
+        console.log("First user in the array:");
+        console.log(json[0]);
+        console.log("Name of the first user in the array:");
+        console.log(json[0].name);
+
+        fetch('api/hello').then(res => res.json())
+        .then(json => {
+            console.log("API invoked!");
+        });
+})
+  };
+
+  console.log('index...');
+  return (    
     <div className={styles.container}>
       <Head>
         <title>Create Next App</title>
@@ -15,6 +34,8 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+
 
         <p className={styles.description}>
           Get started by editing{' '}
@@ -31,7 +52,7 @@ export default function Home() {
             <h2>Learn &rarr;</h2>
             <p>Learn about Next.js in an interactive course with quizzes!</p>
           </a>
-
+          <button onClick={onClickHandler}>Click Me!</button>
           <a
             href="https://github.com/vercel/next.js/tree/master/examples"
             className={styles.card}
